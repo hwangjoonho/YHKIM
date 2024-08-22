@@ -21,13 +21,23 @@ public class Member {
 //            generator = "MEMBER_SEQ_GENERATOR")
 //    @GeneratedValue(strategy = GenerationType.TABLE,
 //            generator = "MEMBER_SEQ_GENERATOR")
+
     @Column(name = "MEMBER_ID")
     private Long id;
+
     @Column(name = "USERNAME", nullable = false)
     private String username;
-    @ManyToOne      // (주체=this=Member)Many to (대상=Team)One
-    @JoinColumn(name = "TEAM_ID")   // mapped by가 없으므로 연관관계의 주인이라는 뜻 / 1대 다 관계에서 '다'쪽을 주인으로 잡아야 깔끔하게 설계가 가능
+//    -------------- 다 대일 단방향 매핑 ------------------
+//    @ManyToOne      // (주체=this=Member)Many to (대상=Team)One
+//    @JoinColumn(name = "TEAM_ID")   // mapped by가 없으므로 연관관계의 주인이라는 뜻 / 1대 다 관계에서 '다'쪽을 주인으로 잡아야 깔끔하게 설계가 가능
+//    private Team team;
+//------------------------------------------------------------------------------
+//    ----------------- 일 대다 양방향 매핑 ---------------
+    @ManyToOne
+    @JoinColumn(name = "TEAM_ID",insertable = false, updatable = false)  //<<---- Team에서    관리하기에 조회만 가능하도록 수동조작
     private Team team;
+//--------------------------------------------------------
+
 
     public Team getTeam() {
         return team;

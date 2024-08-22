@@ -18,10 +18,16 @@ public class Team {
 //            generator = "TEAM_SEQ_GENERATOR")
     @Column(name = "TEAM_ID")
     private Long id;
-    private String name;
-    @OneToMany(mappedBy = "team")   // mappedBy에 연관관계의 주인 표시 / 여기서는 읽기만 가능
-    private List<Member> members = new ArrayList<>();
 
+
+//    @OneToMany(mappedBy = "team")   // mappedBy에 연관관계의 주인 표시 / 여기서는 읽기만 가능   // <<-------------- 다 대일 양방향 매핑 --------
+    @OneToMany                   //    <<----------------- 일 대다 단방향 매핑 -----------------DB 관계와는 반대 형식이므로 비추천
+    @JoinColumn(name = "TEAM_ID")//    <<----------------- 일 대다 단방향 매핑 -----------------DB 관계와는 반대 형식이므로 비추천
+    private List<Member> members = new ArrayList<>();
+//------------------------------------------------------------------------------
+
+
+    private String name;
 
     public void addmember(Member member) {
         member.setTeam(this);   // 다관계 적용 부분 (객체에 적용하기)
