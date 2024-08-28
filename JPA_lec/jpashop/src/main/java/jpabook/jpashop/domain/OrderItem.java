@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import java.util.ArrayList;
 
 @Entity
-public class OrderItem {
+public class OrderItem extends BaseEntity{
 
     @Id
     @GeneratedValue
@@ -32,14 +32,6 @@ public class OrderItem {
     @JoinColumn(name = "ITEM_ID")
     private Item item;
 
-    public Item getItem() {
-        return item;
-    }
-
-    public void setItem(Item item) {
-        this.item = item;
-    }
-
     private int orderPrice;
     private int count;
 
@@ -51,20 +43,12 @@ public class OrderItem {
         this.id = id;
     }
 
-    public Long getOrderId() {
-        return orderId;
+    public Item getItem() {
+        return item;
     }
 
-    public void setOrderId(Long orderId) {
-        this.orderId = orderId;
-    }
-
-    public Long getItemId() {
-        return itemId;
-    }
-
-    public void setItemId(Long itemId) {
-        this.itemId = itemId;
+    public void setItem(Item item) {
+        this.item = item;
     }
 
     public int getOrderPrice() {

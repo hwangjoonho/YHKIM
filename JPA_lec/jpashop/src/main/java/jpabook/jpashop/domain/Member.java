@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class Member {
+public class Member extends BaseEntity{
 
     @Id @GeneratedValue
     private Long id;
@@ -14,10 +14,10 @@ public class Member {
     private String city;
     private String street;
     private String zipcode;
-    
+
     // 양방향 매핑관련 : 멤버를 보고 오더 꺼낼일은 거의 없다 : memberId로 움직이기떄문
-//    @OneToMany(mappedBy = "member")
-//    private List<Order> orders = new ArrayList<>();
+    @OneToMany(mappedBy = "member")
+    private List<Order> orders = new ArrayList<>();
 
     public Long getId() {
         return id;

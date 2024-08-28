@@ -2,6 +2,10 @@ package hellojpa;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 // @Table(name = "MBR")
 // @SequenceGenerator(
@@ -12,7 +16,7 @@ import jakarta.persistence.*;
 //        name = "MEMBER_SEQ_GENERATOR",
 //        table = "MY_SEQUENCES",
 //        pkColumnValue = "MEMBER_SEQ", allocationSize = 1)
-public class Member {
+public class Member extends BaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,16 +31,31 @@ public class Member {
 
     @Column(name = "USERNAME", nullable = false)
     private String username;
-//    -------------- 다 대일 단방향 매핑 ------------------
+//    -------------------------------------------- 多 : 1 단방향 매핑 ----------------------------------------------------------------
 //    @ManyToOne      // (주체=this=Member)Many to (대상=Team)One
-//    @JoinColumn(name = "TEAM_ID")   // mapped by가 없으므로 연관관계의 주인이라는 뜻 / 1대 다 관계에서 '다'쪽을 주인으로 잡아야 깔끔하게 설계가 가능
+//    @JoinColumn(name = "TEAM_ID")   // mapped by가 없으므로 연관관계의 주인이라는 뜻 / 1대 多 관계에서 '多'쪽을 주인으로 잡아야 깔끔하게 설계가 가능
 //    private Team team;
 //------------------------------------------------------------------------------
-//    ----------------- 일 대다 양방향 매핑 ---------------
+//    ----------------- 1 대 多 양방향 매핑 ---------------
     @ManyToOne
     @JoinColumn(name = "TEAM_ID",insertable = false, updatable = false)  //<<---- Team에서    관리하기에 조회만 가능하도록 수동조작
     private Team team;
 //--------------------------------------------------------
+
+    //    -------------------- 1 : 1 관계 ----------------------------
+    @OneToOne
+    @JoinColumn(name = "LOCKER_ID")
+    private Locker locker;
+
+//    ------------------------- 多 : 多 관계 / 실무 사용 불가능-------------------------------------
+//    @ManyToMany
+// -----------------------------多 : 多 관계 -> 맵핑 테이블 엔티티로 승격-------------------------------------
+
+    @OneToMany(mappedBy = "member")
+    private List<MemberProduct> memberProducts = new ArrayList<>();
+    // ---------------------------------------------------------------------------------------
+
+
 
 
     public Team getTeam() {
@@ -49,7 +68,7 @@ public class Member {
 //    public void changeTeam(Team team) {
 //        this.team = team;
 //        team.getMembers().add(this);
-//    } // 양쪽에 연관관계 편의 메서드 존재시 무한루프 주의 -> 한쪾만 해주자
+//    } // 양쪽에 연관관계 편의 메서드 존재시 무한루프 주의 -> 한쪽만 해주자
 
 
 

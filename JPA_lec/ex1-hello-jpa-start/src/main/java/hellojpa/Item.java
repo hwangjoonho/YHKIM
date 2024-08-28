@@ -1,24 +1,17 @@
-package jpabook.jpashop.domain;
+package hellojpa;
 
 import jakarta.persistence.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Entity
-@Inheritance
-@DiscriminatorColumn
-public class Item extends BaseEntity{
+@Inheritance(strategy = InheritanceType.JOINED)
+@DiscriminatorColumn(name = "디타입")             // 단일 테이블 전략에서 타입 지정시 사용하는 값 설정
+public class Item {
 
     @Id @GeneratedValue
-    @Column(name = "ITEM_ID")
     private Long id;
+
     private String name;
     private int price;
-    private int stockQuantity;
-
-    @ManyToMany(mappedBy = "items")
-    private List<Category> categories = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -42,13 +35,5 @@ public class Item extends BaseEntity{
 
     public void setPrice(int price) {
         this.price = price;
-    }
-
-    public int getStockQuantity() {
-        return stockQuantity;
-    }
-
-    public void setStockQuantity(int stockQuantity) {
-        this.stockQuantity = stockQuantity;
     }
 }

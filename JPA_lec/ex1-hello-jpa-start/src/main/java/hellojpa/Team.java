@@ -10,7 +10,7 @@ import java.util.List;
 //        name = "TEAM_SEQ_GENERATOR",
 //        sequenceName = "TEAM_SEQ", //매핑할 데이터베이스 시퀀스 이름
 //        initialValue = 1, allocationSize = 1)    // allocationSize : 미리 시퀀스 50개 땡겨와서 영속성으로 관리 = DB 시퀀스 조회 최소화
-public class Team {
+public class Team extends BaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
