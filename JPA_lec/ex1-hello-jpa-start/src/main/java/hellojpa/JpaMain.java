@@ -16,31 +16,47 @@ public class JpaMain {
 
         try {
 
+            Child child1 = new Child();
+            Child child2 = new Child();
+
+            Parent parent = new Parent();
+            parent.addChild(child1);
+            parent.addChild(child2);
+
+            em.persist(parent);
+
+            em.flush();
+            em.clear();
+
+            Parent findParent = em.find(Parent.class, parent.getId());
+//            findParent.getChildList().remove(0);
+
+
 // ---------------------------------------- 객체 proxy 파트 --------- 즉 객체 프록시(getReference)나 DB 조회 후 캐싱(1차 캐시) 둘다 영속성 컨텍스트 1차 캐시와 같은 레벨로 반영 --------------------------------
-            Member member1 = new Member();                                      // 이후 사용시 먼저 사용된 값을 가져와서 사용하는 방식으로 운용
-            member1.setUsername("user1");
-            em.persist(member1);
-
-            Member member2 = new Member();
-            member2.setUsername("user2");
-            em.persist(member2);
-
-            em.flush();     // 영속성 컨텍스트의 변경내용을 데이터베이스에 반영
-            em.clear();     // 영속성 컨텍스트를 완전히 초기화
-
-            Member m1 = em.getReference(Member.class, member1.getId());     // 프록시 조회 -> 영속성 컨텍스트에 반영
-            System.out.println("m1 = " + m1.getClass());
-            String username = m1.getUsername();     // 프록시 강제 초기화
-            System.out.println("username = " + username);
-
-//            Member reference = em.getReference(Member.class, member2.getId());
+//            Member member1 = new Member();                                      // 이후 사용시 먼저 사용된 값을 가져와서 사용하는 방식으로 운용
+//            member1.setUsername("user1");
+//            em.persist(member1);
+//
+//            Member member2 = new Member();
+//            member2.setUsername("user2");
+//            em.persist(member2);
+//
+//            em.flush();     // 영속성 컨텍스트의 변경내용을 데이터베이스에 반영
+//            em.clear();     // 영속성 컨텍스트를 완전히 초기화
+//
+//            Member m1 = em.getReference(Member.class, member1.getId());     // 프록시 조회 -> 영속성 컨텍스트에 반영
+//            System.out.println("m1 = " + m1.getClass());
+//            String username = m1.getUsername();     // 프록시 강제 초기화
+//            System.out.println("username = " + username);
+//
+////            Member reference = em.getReference(Member.class, member2.getId());
+////            System.out.println("reference = " + reference.getClass());
+//
+//            Member reference = em.find(Member.class, member1.getId());          // DB 조회 -> 영속성 컨텍스트에 반영
 //            System.out.println("reference = " + reference.getClass());
-
-            Member reference = em.find(Member.class, member1.getId());          // DB 조회 -> 영속성 컨텍스트에 반영
-            System.out.println("reference = " + reference.getClass());
-
-            // JPA에서는 같은 영속성 컨텍스트/ 같은 트랙잭션 레벨 안에서 조회시 항상 같다가 나와야한다.
-            System.out.println("a == a " + (m1 == reference));
+//
+//            // JPA에서는 같은 영속성 컨텍스트/ 같은 트랙잭션 레벨 안에서 조회시 항상 같다가 나와야한다.
+//            System.out.println("a == a " + (m1 == reference));
 
 //------------------------------------------------------------------------------------------------------------
 
