@@ -2,6 +2,7 @@ package hellojpa;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +17,7 @@ import java.util.List;
 //        name = "MEMBER_SEQ_GENERATOR",
 //        table = "MY_SEQUENCES",
 //        pkColumnValue = "MEMBER_SEQ", allocationSize = 1)
-public class Member extends BaseEntity{
+public class Member /* extends BaseEntity */ {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,6 +32,20 @@ public class Member extends BaseEntity{
 
     @Column(name = "USERNAME", nullable = false)
     private String username;
+
+    // ----------------------------
+
+    // ---------------------------------Embeded 임베디드 객체 --------------------------------------------------
+    // Period
+    private LocalDateTime startDate;
+    private LocalDateTime endDate;
+
+    // 주소
+    private String city;
+    private String street;
+    private String zipcode;
+
+
 //    -------------------------------------------- 즉시 로딩과 지연 로딩 ----------------------------------------------------------------
 
     @ManyToOne(fetch = FetchType.LAZY)
