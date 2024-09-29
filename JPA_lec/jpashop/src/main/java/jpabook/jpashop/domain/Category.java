@@ -13,7 +13,7 @@ public class Category extends BaseEntity{
 
     private String name;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)  // OneToMany는 자동 LAZY이다. ManyToOne이나 OneToOne에 LAZY처리를 해줘야한다.
     @JoinColumn(name = "PARENT_ID")
     private Category parent;
 

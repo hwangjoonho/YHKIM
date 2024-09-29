@@ -19,21 +19,34 @@ public class JpaMain {
             team.setName("teamA");
             em.persist(team);
 
-            Member member1 = new Member();
-            member1.setUsername("member1");
-            member1.setTeam(team);
-            em.persist(member1);
+            Child child1 = new Child();
+            Child child2 = new Child();
 
-            em.flush();
-            em.clear();
+            Parent parent = new Parent();
+            parent.addChild(child1);
+            parent.addChild(child2);
 
-            Member m = em.find(Member.class, member1.getId());
+            em.persist(parent);
 
-            System.out.println("m=" + m.getTeam().getClass());      // 값이 프록시로 떨어진다. 즉 껍데기만 먼저 가져온다.
+            Parent findParent = em.find(Parent.class, parent.getId());
+//            findParent.getChildList().remove(0);
 
-            System.out.println("=============================");
-            m.getTeam().getName();      // 값을 직접 조회하는 이 시점에 껍데기에 직접 값을 채워넣는다.
-            System.out.println("=============================");
+// ---------------------------------------------------------------- 프록시와 연관관계 관리 ---------------------------------------------------------------------------
+//            Member member1 = new Member();
+//            member1.setUsername("member1");
+//            member1.setTeam(team);
+//            em.persist(member1);
+//
+//            em.flush();
+//            em.clear();
+//
+//            Member m = em.find(Member.class, member1.getId());
+//
+//            System.out.println("m=" + m.getTeam().getClass());      // 값이 프록시로 떨어진다. 즉 껍데기만 먼저 가져온다.
+//
+//            System.out.println("=============================");
+//            m.getTeam().getName();      // 값을 직접 조회하는 이 시점에 껍데기에 직접 값을 채워넣는다.
+//            System.out.println("=============================");
 
 // ---------------------------------------- 객체 proxy 파트 --------- 즉 객체 프록시(getReference)나 DB 조회 후 캐싱(1차 캐시) 둘다 영속성 컨텍스트 1차 캐시와 같은 레벨로 반영 --------------------------------
 //            Member member1 = new Member();                                      // 이후 사용시 먼저 사용된 값을 가져와서 사용하는 방식으로 운용

@@ -47,6 +47,9 @@ public class Member /* extends BaseEntity */ {
 
 
 //    -------------------------------------------- 즉시 로딩과 지연 로딩 ----------------------------------------------------------------
+//    @ManyToOne(fetch = FetchType.EAGER)
+//    @JoinColumn
+//    private Team team;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "TEAM_ID")
@@ -70,6 +73,7 @@ public class Member /* extends BaseEntity */ {
 //    @JoinColumn(name = "LOCKER_ID")
 //    private Locker locker;
 
+
 //    ------------------------- 多 : 多 관계 / 실무 사용 불가능-------------------------------------
 //    @ManyToMany
 // -----------------------------多 : 多 관계 -> 맵핑 테이블 엔티티로 승격-------------------------------------
@@ -77,6 +81,20 @@ public class Member /* extends BaseEntity */ {
     @OneToMany(mappedBy = "member")
     private List<MemberProduct> memberProducts = new ArrayList<>();
     // ---------------------------------------------------------------------------------------
+
+    //------------Embedded 타입 관련 ------------------------------------
+
+    // 기간 Period
+//    private LocalDateTime startDate;
+//    private LocalDateTime endDate;
+    @Embedded
+    private Period workPeriod;
+    @Embedded
+    private Address homeAddress;
+    // 주소
+//    private String city;
+//    private String street;
+//    private String zipcode;
 
 
 
